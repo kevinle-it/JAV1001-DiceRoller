@@ -20,7 +20,7 @@
             android:id="@+id/textRollResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Roll Result: " />
+            android:text="@string/roll_result" />
 
         <Spinner
             android:id="@+id/spinnerDie"
@@ -38,14 +38,14 @@
                 android:id="@+id/btnRollOnce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Roll Once" />
+                android:text="@string/roll_once" />
 
             <Button
                 android:id="@+id/btnRollTwice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Roll Twice" />
+                android:text="@string/roll_twice" />
 
         </LinearLayout>
 
@@ -59,8 +59,7 @@
                 android:id="@+id/inputNumOfSides"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autofillHints="Number of sides of die to be added"
-                android:hint="Number of sides"
+                android:hint="@string/number_of_sides"
                 android:inputType="number" />
 
             <Button
@@ -68,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Add New Die" />
+                android:text="@string/add_new_die" />
 
         </LinearLayout>
 
@@ -77,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="History: " />
+            android:text="@string/history_initial" />
 
     </LinearLayout>
 
