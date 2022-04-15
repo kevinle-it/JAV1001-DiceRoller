@@ -29,6 +29,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top" />
 
+        <CheckBox
+            android:id="@+id/checkBoxSpecialRolls"
+            style="@style/Theme.DiceRoller.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/true_10_sided_die"
+            android:checked="false"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,6 +88,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top"
             android:text="@string/history_initial" />
+
+        <TextView
+            style="@style/Theme.DiceRoller.Notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/notice_margin_top"
+            android:gravity="bottom"
+            android:text="@string/notice_special_rolls"/>
 
     </LinearLayout>
 

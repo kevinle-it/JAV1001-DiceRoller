@@ -14,4 +14,6 @@
 
     <string name="history_initial">History: N/A</string>
     <string name="history">History: %1$s</string>
+    <string name="notice_special_rolls">*Select 10 sided die for special rolls</string>
+    <string name="true_10_sided_die">True 10 sided die</string>
 </resources>

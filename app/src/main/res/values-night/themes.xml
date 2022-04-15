@@ -34,6 +34,20 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <!-- Style for Notice Text Views. -->
+    <style name="Theme.DiceRoller.Notice">
+        <item name="android:textSize">@dimen/notice_text_size</item>
+        <item name="android:textColor">@color/light_green_a400</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Style for CheckBoxes. -->
+    <style name="Theme.DiceRoller.CheckBox">
+        <item name="android:textSize">@dimen/checkbox_text_size</item>
+        <item name="android:textColor">@color/light_green_a400</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
     <!-- Style for Spinners. -->
     <style name="Theme.DiceRoller.SpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textSize">@dimen/spinner_text_size</item>

@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String DIE_OPTIONS = "DIE_OPTIONS";
     private static final String HISTORY_ROLL_RESULTS = "HISTORY_ROLL_RESULTS";
 
+    private static final int TRUE_10_SIDED_DIE_TYPE = 10;
+
     TextView textRollResult;
     Spinner spinnerDie;
     List<Integer> spinnerDieOptions = new ArrayList();
     ArrayAdapter<CharSequence> spinnerDieAdapter;
 
     int minValue = 1, maxValue = 1;
+
+    CheckBox checkBoxSpecialRolls;
 
     Button btnRollOnce;
     Button btnRollTwice;
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         textRollResult = findViewById(R.id.textRollResult);
         spinnerDie = findViewById(R.id.spinnerDie);
+
+        checkBoxSpecialRolls = findViewById(R.id.checkBoxSpecialRolls);
 
         btnRollOnce = findViewById(R.id.btnRollOnce);
         btnRollTwice = findViewById(R.id.btnRollTwice);
@@ -103,10 +110,23 @@ public class MainActivity extends AppCompatActivity {
             textHistory.setText(historyResultsToShow);
         }
 
+        setupCheckBoxSpecialRolls();
         setupSpinner();
         setupButtonsRoll();
         setupInputNumOfSides();
         setupButtonAddNewDie();
+    }
+
+    private void setupCheckBoxSpecialRolls() {
+        checkBoxSpecialRolls.setOnCheckedChangeListener((compoundButton, checked) -> {
+            if (checked) {
+                minValue = 0;
+                maxValue -= 1;
+            } else {
+                minValue = 1;
+                maxValue += 1;
+            }
+        });
     }
 
     private void setupSpinner() {
@@ -130,6 +150,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 minValue = 1;
                 maxValue = spinnerDieOptions.get(i);
+
+                if (maxValue == TRUE_10_SIDED_DIE_TYPE) {
+                    checkBoxSpecialRolls.setVisibility(View.VISIBLE);
+                } else {
+                    checkBoxSpecialRolls.setVisibility(View.GONE);
+                    checkBoxSpecialRolls.setChecked(false);
+                }
             }
 
             @Override
