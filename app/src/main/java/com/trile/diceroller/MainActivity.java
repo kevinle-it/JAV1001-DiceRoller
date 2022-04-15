@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,10 +21,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String DIE_OPTIONS = "DIE_OPTIONS";
+    private static final String HISTORY_ROLL_RESULTS = "HISTORY_ROLL_RESULTS";
 
     TextView textRollResult;
     Spinner spinnerDie;
@@ -56,6 +62,47 @@ public class MainActivity extends AppCompatActivity {
 
         textHistory = findViewById(R.id.textHistory);
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // ========== Retrieve Spinner Options from storage ==========
+        String dieOptions = pref.getString(DIE_OPTIONS, "");
+        // If there are die options stored in SharedPreferences
+        if (!dieOptions.equalsIgnoreCase("")) {
+            // Convert literal string to string list of integer
+            List<String> options = Arrays.asList(dieOptions.split("\\s*,\\s*"));
+
+            // Convert string list to integer list
+            for (String option : options) {
+                spinnerDieOptions.add(parseInt(option));
+            }
+        } else {
+            // SharedPreferences is EMPTY => initialize spinnerDieOptions
+            int[] dieOptionArray = getResources().getIntArray(R.array.die_options);
+
+            // Convert integer array to integer list
+            for (int option : dieOptionArray) {
+                spinnerDieOptions.add(option);
+            }
+            // Save to SharedPreferences for faster loading time later
+            saveToSharedPrefs(spinnerDieOptions, DIE_OPTIONS);
+        }
+
+        // ========== Retrieve History Roll Results from storage ==========
+        String historyResults = pref.getString(HISTORY_ROLL_RESULTS, "");
+        // If there are history results stored in SharedPreferences
+        if (!historyResults.equalsIgnoreCase("")) {
+            // Convert literal string to string list of integer
+            List<String> results = Arrays.asList(historyResults.split("\\s*,\\s*"));
+
+            // Convert string list to integer list
+            for (String result : results) {
+                historyRollResults.add(parseInt(result));
+            }
+            // Show stored history roll results
+            String historyResultsToShow = buildHistoryRollResults(historyRollResults, getResources());
+            textHistory.setText(historyResultsToShow);
+        }
+
         setupSpinner();
         setupButtonsRoll();
         setupInputNumOfSides();
@@ -63,12 +110,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSpinner() {
-        int[] dieOptions = getResources().getIntArray(R.array.die_options);
-
-        for (int option : dieOptions) {
-            spinnerDieOptions.add(option);
-        }
-
         List<String> options = new ArrayList();
         for (int option : spinnerDieOptions) {
             options.add(String.valueOf(option));
@@ -107,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
             String historyResults = buildHistoryRollResults(historyRollResults, getResources());
             textHistory.setText(historyResults);
+
+            saveToSharedPrefs(historyRollResults, HISTORY_ROLL_RESULTS);
         });
 
         btnRollTwice.setOnClickListener(view -> {
@@ -121,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
 
             String historyResults = buildHistoryRollResults(historyRollResults, getResources());
             textHistory.setText(historyResults);
+
+            saveToSharedPrefs(historyRollResults, HISTORY_ROLL_RESULTS);
         });
     }
 
@@ -167,6 +212,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Add same new item to options list
                 spinnerDieOptions.add(dieTypeInt);
+
+                // Save to SharedPreferences
+                saveToSharedPrefs(spinnerDieOptions, DIE_OPTIONS);
             } else {
                 int duplicatedPos = spinnerDieOptions.indexOf(dieTypeInt);
                 spinnerDie.setSelection(duplicatedPos);
@@ -215,5 +263,17 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         return -1;
+    }
+
+    private void saveToSharedPrefs(List<Integer> list, String key) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = pref.edit();
+
+        String listStr = list.toString();
+        // Remove start & end square brackets []
+        listStr = listStr.substring(1, listStr.length() - 1);
+
+        editor.putString(key, listStr);
+        editor.apply();
     }
 }
