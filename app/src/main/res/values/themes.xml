@@ -12,5 +12,32 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!-- Apply Spinner Style on Application level. -->
+        <item name="android:spinnerItemStyle">@style/Theme.DiceRoller.SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Theme.DiceRoller.SpinnerDropDownItem</item>
+        <!-- Apply Button Style on Application level. -->
+        <item name="materialButtonStyle">@style/Theme.DiceRoller.Button</item>
+    </style>
+
+    <!-- Style for Text Views. -->
+    <style name="Theme.DiceRoller.TextView">
+        <item name="android:textSize">@dimen/text_view_text_size</item>
+        <item name="android:textColor">@color/purple_a400</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Style for Spinners. -->
+    <style name="Theme.DiceRoller.SpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textSize">@dimen/spinner_text_size</item>
+    </style>
+    <style name="Theme.DiceRoller.SpinnerDropDownItem" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:textSize">@dimen/spinner_text_size</item>
+    </style>
+
+    <!-- Style for Buttons. -->
+    <style name="Theme.DiceRoller.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/teal_500</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textColor">@color/yellow_a700</item>
     </style>
 </resources>

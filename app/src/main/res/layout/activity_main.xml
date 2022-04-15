@@ -18,6 +18,7 @@
 
         <TextView
             android:id="@+id/textRollResult"
+            style="@style/Theme.DiceRoller.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/roll_result" />
@@ -73,6 +74,7 @@
 
         <TextView
             android:id="@+id/textHistory"
+            style="@style/Theme.DiceRoller.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top"
