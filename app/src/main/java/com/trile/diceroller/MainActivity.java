@@ -2,6 +2,7 @@ package com.trile.diceroller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddNewDie;
 
     TextView textHistory;
+    List<Integer> historyRollResults = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         textHistory = findViewById(R.id.textHistory);
 
         setupSpinner();
+        setupButtonsRoll();
     }
 
     private void setupSpinner() {
@@ -77,5 +80,50 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+    }
+
+    private void setupButtonsRoll() {
+        btnRollOnce.setOnClickListener(view -> {
+            int randomNum = getRandomNumber(minValue, maxValue);
+            historyRollResults.add(randomNum);
+
+            String rollResult = getResources()
+                    .getQuantityString(R.plurals.roll_results, 1, randomNum);
+            textRollResult.setText(rollResult);
+
+            String historyResults = buildHistoryRollResults(historyRollResults, getResources());
+            textHistory.setText(historyResults);
+        });
+
+        btnRollTwice.setOnClickListener(view -> {
+            int randomNum1 = getRandomNumber(minValue, maxValue);
+            int randomNum2 = getRandomNumber(minValue, maxValue);
+            historyRollResults.add(randomNum1);
+            historyRollResults.add(randomNum2);
+
+            String rollResult = getResources()
+                    .getQuantityString(R.plurals.roll_results, 2, randomNum1, randomNum2);
+            textRollResult.setText(rollResult);
+
+            String historyResults = buildHistoryRollResults(historyRollResults, getResources());
+            textHistory.setText(historyResults);
+        });
+    }
+
+    private String buildHistoryRollResults(List<Integer> rollResults, Resources resources) {
+        String listStr = rollResults.toString();
+        return resources.getString(
+                R.string.history,
+                listStr.substring(1, listStr.length() - 1)  // Remove start & end square brackets []
+        );
+    }
+
+    private int getRandomNumber(int min, int max) {
+        if (min > max) {
+            int temp = min;
+            min = max;
+            max = temp;
+        }
+        return (int) (Math.random() * (max - min + 1)) + min;
     }
 }
